@@ -3,6 +3,7 @@ import lombok.Data;
 import org.springframework.validation.FieldError;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 @Data
 public class ApiError {
@@ -15,5 +16,10 @@ public class ApiError {
         for(FieldError error:fieldErrors){
             Errors.add(error.getDefaultMessage());
         }
+    }
+    ApiError(int status, String message, String error){
+        this.status=status;
+        this.message=message;
+        this.setErrors(Arrays.asList(error));
     }
 }
