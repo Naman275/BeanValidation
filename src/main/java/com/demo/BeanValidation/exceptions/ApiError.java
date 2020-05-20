@@ -1,29 +1,19 @@
 package com.demo.BeanValidation.exceptions;
-
 import lombok.Data;
-import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-
 @Data
 public class ApiError {
-
-    private HttpStatus status;
+    private int status;
     private String message;
-    private List<String> errors;
-
-    public ApiError(HttpStatus status, String message, List<String> errors) {
-        super();
-        this.status = status;
-        this.message = message;
-        this.errors = errors;
-    }
-
-    public ApiError(HttpStatus status, String message, String error) {
-        super();
-        this.status = status;
-        this.message = message;
-        errors = Arrays.asList(error);
+    private List<String> Errors = new ArrayList<>();
+    ApiError(int status, String message, List<FieldError> fieldErrors){
+        this.status=status;
+        this.message=message;
+        for(FieldError error:fieldErrors){
+            Errors.add(error.getDefaultMessage());
+        }
     }
 }
