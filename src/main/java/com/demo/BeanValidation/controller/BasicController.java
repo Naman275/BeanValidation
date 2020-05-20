@@ -17,12 +17,15 @@ import javax.validation.Valid;
 public class BasicController {
     @PostMapping("/savePerson1")
     public ResponseEntity<String> savePerson (@Valid @RequestBody Person person){
+        /*if request dto validation failed then it will throw MethodArgumentNotValidException exception
+           which is caught in exception handler controller */
         return new ResponseEntity<String>("Hi There", HttpStatus.OK);
     }
 
     @PostMapping("/savePerson2")
     public ResponseEntity<Object> save(@Valid @RequestBody Person person,Errors errors){
         if(errors.hasErrors()){
+            //if you want to validate request dto and catch errors in the controller layer itself
             return new ResponseEntity<>(errors.getFieldErrors(),HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("Hi There", HttpStatus.OK);

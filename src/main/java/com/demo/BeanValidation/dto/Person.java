@@ -18,5 +18,6 @@ public class Person {
     @NotNull(message = "Account Balance needs to be disclosed")
     private BigDecimal accBalance;
     private String country;
+    @NotNull
     private Address address;
 }
