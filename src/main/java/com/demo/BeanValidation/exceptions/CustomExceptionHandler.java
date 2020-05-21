@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.Set;
 
 @ControllerAdvice
 public class CustomExceptionHandler {
@@ -28,6 +31,15 @@ public class CustomExceptionHandler {
         errorMessage +=",Expected value of type:"+((MismatchedInputException)ex).getTargetType().getSimpleName();
         ApiError apiError=new ApiError(HttpStatus.BAD_REQUEST.value(),"Invalid Format",errorMessage);
         return new ResponseEntity<ApiError>(apiError,HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler({ConstraintViolationException.class})
+    public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex){
+        Set<ConstraintViolation<?>> constraintViolations=ex.getConstraintViolations();
+        if(constraintViolations.size()>0){
+
+        }
+        ApiError apiError=new ApiError(HttpStatus.BAD_REQUEST.value(),"Validation_Failed","");
+        return null;
     }
 
 }

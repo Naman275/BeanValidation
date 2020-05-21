@@ -8,6 +8,7 @@ import com.demo.BeanValidation.exceptions.BadRequestException;
 import com.demo.BeanValidation.validation.CustomValidation;
 import org.springframework.stereotype.Service;
 import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.validation.groups.Default;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +27,7 @@ public class BasicServiceImpl implements BasicService {
             default:voilations=CustomValidation.validate(person, Default.class);break;
         }
         if(voilations.size()>0){
-
+            throw new ConstraintViolationException(voilations);
         }
     }
 

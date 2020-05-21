@@ -2,9 +2,9 @@
   "name": "naman",
   "occupation": "service",
   "accBalance": "1000",
-  "country": "IN",
-  "address": [{
-    "applicantId": "1234",
+  "citizen": "IN",
+  "addressList": [{
+    "applicantId": "abc12",
     "city": "panchkula",
     "state": "haryana",
     "pincode": "134112",
