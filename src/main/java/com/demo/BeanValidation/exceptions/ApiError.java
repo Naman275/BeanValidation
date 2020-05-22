@@ -17,6 +17,11 @@ public class ApiError {
             Errors.add(error.getDefaultMessage());
         }
     }
+    ApiError(List<String> errors,int status,String message){
+        this.setErrors(errors);
+        this.setMessage(message);
+        this.setStatus(status);
+    }
     ApiError(int status, String message, String error){
         this.status=status;
         this.message=message;

@@ -13,6 +13,8 @@ import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import javax.validation.GroupDefinitionException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -33,12 +35,19 @@ public class CustomExceptionHandler {
         return new ResponseEntity<ApiError>(apiError,HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler({ConstraintViolationException.class})
-    public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex){
+    public ResponseEntity<ApiError> handleConstraintViolation(ConstraintViolationException ex){
+        List<String> errorsList=new ArrayList<>();
         Set<ConstraintViolation<?>> constraintViolations=ex.getConstraintViolations();
-        if(constraintViolations.size()>0){
+       for(ConstraintViolation constraintViolation:constraintViolations){
+           errorsList.add(constraintViolation.getMessage());
+       }
+        ApiError apiError=new ApiError(errorsList,HttpStatus.BAD_REQUEST.value(),"Validation_Failed");
+        return new ResponseEntity<ApiError>(apiError,HttpStatus.BAD_REQUEST);
+    }
 
-        }
-        ApiError apiError=new ApiError(HttpStatus.BAD_REQUEST.value(),"Validation_Failed","");
+    @ExceptionHandler({GroupDefinitionException.class})
+    public ResponseEntity<Object> handle(GroupDefinitionException ex){
+        System.out.println(ex);
         return null;
     }
 

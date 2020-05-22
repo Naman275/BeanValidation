@@ -3,6 +3,7 @@ package com.demo.BeanValidation.controller;
 import com.demo.BeanValidation.constants.Util;
 import com.demo.BeanValidation.dto.Person;
 import com.demo.BeanValidation.service.BasicService;
+import com.demo.BeanValidation.validation.CustomValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +34,14 @@ public class BasicController {
     public ResponseEntity<Object> save(@Valid @RequestBody Person person,Errors errors){
         if(errors.hasErrors()){
             //if you want to validate request dto and catch errors in the controller layer itself
-
         }
-        basicService.validateSavePerson(person);
+        CustomValidation.validateSavePerson(person);
         return new ResponseEntity<>("Hi There", HttpStatus.OK);
+    }
+
+    @PostMapping("/savePerson3")
+    public ResponseEntity<Object> saveAfterValidation(@RequestBody Person person){
+        //here the validation will be performed in interceptor first then only will hit this api
+        return new ResponseEntity<>("-verified Dto-", HttpStatus.OK);
     }
 }

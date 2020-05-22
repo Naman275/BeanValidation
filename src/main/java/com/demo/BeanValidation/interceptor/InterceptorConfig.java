@@ -14,7 +14,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> allowedPath=new ArrayList<>();
-        allowedPath.add("/api/v1/savePerson1");
+        allowedPath.add("/api/v1/savePerson3");
         registry.addInterceptor(new CustomInterceptor()).addPathPatterns(allowedPath);
     }
 

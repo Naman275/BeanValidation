@@ -34,4 +34,5 @@ public class Person {
     @NotNull(message = "addressList:Please provide address")
     @Valid
     private List<Address> addressList;
+
 }
